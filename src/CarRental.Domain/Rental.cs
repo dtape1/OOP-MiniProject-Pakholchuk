@@ -9,20 +9,23 @@ public class Rental
     public DateTime EndDate { get; private set; }
     public RentalStatus Status { get; private set; }
     public decimal TotalCost { get; private set; }
+    public string PricingStrategyName { get; private set; }
 
-    public Rental(Car car, Client client, DateTime startDate, DateTime endDate)
+    public Rental(Car car, Client client, DateTime startDate, DateTime endDate,
+        string pricingStrategyName = "Стандартний", Guid? id = null)
     {
         if (car == null) throw new ArgumentNullException(nameof(car));
         if (client == null) throw new ArgumentNullException(nameof(client));
         if (endDate <= startDate) throw new ArgumentException("End date must be after start date");
         if (!car.IsAvailable) throw new InvalidOperationException("Car is not available");
 
-        Id = Guid.NewGuid();
+        Id = id ?? Guid.NewGuid();
         Car = car;
         Client = client;
         StartDate = startDate;
         EndDate = endDate;
         Status = RentalStatus.Active;
+        PricingStrategyName = pricingStrategyName;
         TotalCost = CalculateCost();
     }
 
@@ -32,15 +35,19 @@ public class Rental
         return days * Car.PricePerDay;
     }
 
+    public void SetTotalCost(decimal cost) => TotalCost = cost;
+
     public void Complete()
     {
-        if (Status != RentalStatus.Active) throw new InvalidOperationException("Only active rentals can be completed");
+        if (Status != RentalStatus.Active)
+            throw new InvalidOperationException("Only active rentals can be completed");
         Status = RentalStatus.Completed;
     }
 
     public void Cancel()
     {
-        if (Status != RentalStatus.Active) throw new InvalidOperationException("Only active rentals can be cancelled");
+        if (Status != RentalStatus.Active)
+            throw new InvalidOperationException("Only active rentals can be cancelled");
         Status = RentalStatus.Cancelled;
     }
 
