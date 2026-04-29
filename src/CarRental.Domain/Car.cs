@@ -9,14 +9,14 @@ public class Car
     public decimal PricePerDay { get; private set; }
     public bool IsAvailable { get; private set; }
 
-    public Car(string brand, string model, int year, decimal pricePerDay)
+    public Car(string brand, string model, int year, decimal pricePerDay, Guid? id = null)
     {
         if (string.IsNullOrWhiteSpace(brand)) throw new ArgumentException("Brand cannot be empty");
         if (string.IsNullOrWhiteSpace(model)) throw new ArgumentException("Model cannot be empty");
         if (year < 1990 || year > DateTime.Now.Year) throw new ArgumentException("Invalid year");
         if (pricePerDay <= 0) throw new ArgumentException("Price must be positive");
 
-        Id = Guid.NewGuid();
+        Id = id ?? Guid.NewGuid();
         Brand = brand;
         Model = model;
         Year = year;

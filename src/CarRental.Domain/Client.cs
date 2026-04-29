@@ -7,13 +7,13 @@ public class Client
     public string Email { get; private set; }
     public string Phone { get; private set; }
 
-    public Client(string fullName, string email, string phone)
+    public Client(string fullName, string email, string phone, Guid? id = null)
     {
         if (string.IsNullOrWhiteSpace(fullName)) throw new ArgumentException("Full name cannot be empty");
         if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email cannot be empty");
         if (string.IsNullOrWhiteSpace(phone)) throw new ArgumentException("Phone cannot be empty");
 
-        Id = Guid.NewGuid();
+        Id = id ?? Guid.NewGuid();
         FullName = fullName;
         Email = email;
         Phone = phone;
