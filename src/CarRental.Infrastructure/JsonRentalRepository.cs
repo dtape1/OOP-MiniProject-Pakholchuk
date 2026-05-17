@@ -55,10 +55,27 @@ public class JsonRentalRepository : IRentalRepository
             {
                 var car = _carRepo.GetById(d.CarId)!;
                 var client = _clientRepo.GetById(d.ClientId)!;
+
+                if (!car.IsAvailable) car.MakeAvailable();
+
                 var rental = new Rental(car, client, d.StartDate, d.EndDate, d.PricingStrategyName, d.Id);
                 rental.SetTotalCost(d.TotalCost);
-                if (d.Status == "Completed") rental.Complete();
-                else if (d.Status == "Cancelled") rental.Cancel();
+
+                if (d.Status == "Completed")
+                {
+                    rental.Complete();
+                    car.MakeAvailable();
+                }
+                else if (d.Status == "Cancelled")
+                {
+                    rental.Cancel();
+                    car.MakeAvailable();
+                }
+                else
+                {
+                    car.MakeUnavailable();
+                }
+
                 return rental;
             }).ToList();
         }
