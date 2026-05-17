@@ -9,7 +9,7 @@ classDiagram
         +int Year
         +decimal PricePerDay
         +bool IsAvailable
-        +Car(brand, model, year, pricePerDay)
+        +Car(brand, model, year, pricePerDay, id?)
         +MakeAvailable()
         +MakeUnavailable()
     }
@@ -19,7 +19,7 @@ classDiagram
         +string FullName
         +string Email
         +string Phone
-        +Client(fullName, email, phone)
+        +Client(fullName, email, phone, id?)
     }
 
     class Rental {
@@ -30,10 +30,12 @@ classDiagram
         +DateTime EndDate
         +RentalStatus Status
         +decimal TotalCost
-        +Rental(car, client, startDate, endDate)
+        +string PricingStrategyName
+        +Rental(car, client, startDate, endDate, strategyName?, id?)
         +Complete()
         +Cancel()
         +CalculateCost() decimal
+        +SetTotalCost(cost)
     }
 
     class RentalStatus {
@@ -66,14 +68,50 @@ classDiagram
         +GetActive() List~Rental~
     }
 
+    class IPricingStrategy {
+        <<interface>>
+        +string Name
+        +Calculate(pricePerDay, days) decimal
+    }
+
+    class StandardPricingStrategy {
+        +string Name
+        +Calculate(pricePerDay, days) decimal
+    }
+
+    class DiscountPricingStrategy {
+        -decimal _discountPercent
+        +string Name
+        +Calculate(pricePerDay, days) decimal
+    }
+
     class RentalService {
         -ICarRepository _cars
         -IClientRepository _clients
         -IRentalRepository _rentals
-        +RentalService(cars, clients, rentals)
-        +RentCar(clientId, carId, start, end) Rental
+        -Dictionary _pricingStrategies
+        +RegisterPricingStrategy(strategy)
+        +RentCar(clientId, carId, start, end, strategy) Rental
         +ReturnCar(rentalId) Rental
+        +CancelRental(rentalId) Rental
+        +GetAvailableCars() List~Car~
+        +GetCarsSortedByPrice() List~Car~
+        +GetCarsInPriceRange(min, max) List~Car~
         +GetActiveRentals() List~Rental~
+        +GetTotalRevenue() decimal
+    }
+
+    class ICommand {
+        <<interface>>
+        +string Key
+        +string Description
+        +ExecuteAsync() Task
+    }
+
+    class AppRunner {
+        -Dictionary _commands
+        +RunAsync() Task
+        -PrintMenu()
     }
 
     Rental --> Car
@@ -82,4 +120,16 @@ classDiagram
     RentalService --> ICarRepository
     RentalService --> IClientRepository
     RentalService --> IRentalRepository
+    RentalService --> IPricingStrategy
+    StandardPricingStrategy ..|> IPricingStrategy
+    DiscountPricingStrategy ..|> IPricingStrategy
+    AppRunner --> ICommand
+    ListCarsCommand ..|> ICommand
+    ListClientsCommand ..|> ICommand
+    RentCarCommand ..|> ICommand
+    ReturnCarCommand ..|> ICommand
+    CancelRentalCommand ..|> ICommand
+    ActiveRentalsCommand ..|> ICommand
+    AnalyticsCommand ..|> ICommand
+    SaveDataCommand ..|> ICommand
 ```
