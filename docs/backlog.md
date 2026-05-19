@@ -22,14 +22,14 @@
 - [x] iteration-2-plan.md
 
 ## Ітерація 3 — Lab 36
-- [ ] Quality gate (coverage)
-- [ ] Інтеграційні тести
-- [ ] Обробка негативних сценаріїв
-- [ ] TESTING.md
+- [x] Quality gate (coverage)
+- [x] Інтеграційні тести
+- [x] Обробка негативних сценаріїв
+- [x] TESTING.md
 
 ## Ітерація 4 — Lab 37
-- [ ] USER_GUIDE.md
-- [ ] DEVELOPER_GUIDE.md
-- [ ] CHANGELOG.md
-- [ ] FINAL_REPORT.md
-- [ ] DEMO.md
+- [x] USER_GUIDE.md
+- [x] DEVELOPER_GUIDE.md
+- [x] CHANGELOG.md
+- [x] FINAL_REPORT.md
+- [x] DEMO.md
