@@ -87,4 +87,11 @@ public class RentalService
 
     public void AddCar(Car car) => _cars.Add(car);
     public void AddClient(Client client) => _clients.Add(client);
+    
+    // Розширення А — гнучкі фільтри на делегатах
+    public List<Car> FilterCars(Func<Car, bool> predicate)
+        => _cars.GetAll().Where(predicate).ToList();
+
+    public List<Rental> FilterRentals(Func<Rental, bool> predicate)
+        => _rentals.GetAll().Where(predicate).ToList();
 }
