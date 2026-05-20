@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "Id": "2daaec03-880c-4d87-ab38-81848cab765b",
+    "CarId": "024deb4a-cdcd-4da8-9786-b9c05a38ac14",
+    "ClientId": "a7345144-4fb5-4efb-ac8e-d24f13f405b2",
+    "StartDate": "2026-05-20T00:00:00",
+    "EndDate": "2026-05-25T00:00:00",
+    "Status": "Active",
+    "TotalCost": 3600.0,
+    "PricingStrategyName": "\u0417\u0456 \u0437\u043D\u0438\u0436\u043A\u043E\u044E 10%"
+  },
+  {
+    "Id": "989015f6-0dc7-41ee-9320-9c5959ddc977",
+    "CarId": "b986a9f4-c02e-48eb-a9a8-99ff5cbd2225",
+    "ClientId": "a7345144-4fb5-4efb-ac8e-d24f13f405b2",
+    "StartDate": "2026-05-20T00:00:00",
+    "EndDate": "2026-05-25T00:00:00",
+    "Status": "Active",
+    "TotalCost": 6750.0,
+    "PricingStrategyName": "\u0417\u0456 \u0437\u043D\u0438\u0436\u043A\u043E\u044E 10%"
+  }
+]

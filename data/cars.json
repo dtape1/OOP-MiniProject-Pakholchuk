@@ -5,7 +5,7 @@
     "Model": "Camry",
     "Year": 2021,
     "PricePerDay": 800,
-    "IsAvailable": true
+    "IsAvailable": false
   },
   {
     "Id": "b986a9f4-c02e-48eb-a9a8-99ff5cbd2225",
@@ -13,7 +13,7 @@
     "Model": "X5",
     "Year": 2022,
     "PricePerDay": 1500,
-    "IsAvailable": true
+    "IsAvailable": false
   },
   {
     "Id": "d368e2a3-edc0-40d3-8956-d4cd1a3f0ff2",
