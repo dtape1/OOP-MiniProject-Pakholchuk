@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    image: carrental:compose
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+    stdin_open: true
+    tty: true
