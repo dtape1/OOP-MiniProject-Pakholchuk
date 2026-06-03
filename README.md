@@ -1,7 +1,9 @@
 # Car Rental System
 
-Система управління орендою автомобілів — версія з гілки B.
+![CI](https://github.com/dtape1/OOP-MiniProject-Pakholchuk/actions/workflows/dotnet.yml/badge.svg)
 
+Система управління орендою автомобілів, розроблена як навчальний капстоун з ООП.
+Система управління орендою автомобілів — оновлено в main.
 
 ## Технології
 - .NET 9 / C#
