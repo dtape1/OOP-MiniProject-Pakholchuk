@@ -94,4 +94,10 @@ public class RentalService
 
     public List<Rental> FilterRentals(Func<Rental, bool> predicate)
         => _rentals.GetAll().Where(predicate).ToList();
+
+    public List<Client> SearchClients(string query)
+    => _clients.GetAll()
+        .Where(c => c.FullName.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    c.Email.Contains(query, StringComparison.OrdinalIgnoreCase))
+        .ToList();
 }
