@@ -9,9 +9,7 @@ public class Client
 
     public Client(string fullName, string email, string phone, Guid? id = null)
     {
-        if (string.IsNullOrWhiteSpace(fullName)) throw new ArgumentException("Full name cannot be empty");
-        if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email cannot be empty");
-        if (string.IsNullOrWhiteSpace(phone)) throw new ArgumentException("Phone cannot be empty");
+        RentalValidator.ValidateClient(fullName, email, phone);
 
         Id = id ?? Guid.NewGuid();
         FullName = fullName;

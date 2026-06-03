@@ -14,10 +14,7 @@ public class Rental
     public Rental(Car car, Client client, DateTime startDate, DateTime endDate,
         string pricingStrategyName = "Стандартний", Guid? id = null)
     {
-        if (car == null) throw new ArgumentNullException(nameof(car));
-        if (client == null) throw new ArgumentNullException(nameof(client));
-        if (endDate <= startDate) throw new ArgumentException("End date must be after start date");
-        if (!car.IsAvailable) throw new InvalidOperationException("Car is not available");
+        RentalValidator.ValidateRental(car, client, startDate, endDate);
 
         Id = id ?? Guid.NewGuid();
         Car = car;
