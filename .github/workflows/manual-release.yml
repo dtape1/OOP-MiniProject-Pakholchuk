@@ -1,0 +1,45 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 1.0.0)'
+        required: true
+        type: string
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Display release info
+      run: |
+        echo "Building release v${{ inputs.version }}"
+        echo "Target: ${{ inputs.environment }}"
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet publish -c Release -o ./publish
+
+    - name: Upload release artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-v${{ inputs.version }}
+        path: ./publish/

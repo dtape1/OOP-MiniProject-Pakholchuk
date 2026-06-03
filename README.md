@@ -1,5 +1,7 @@
 # Car Rental System
 
+![CI](https://github.com/dtape1/OOP-MiniProject-Pakholchuk/actions/workflows/dotnet.yml/badge.svg)
+
 Система управління орендою автомобілів, розроблена як навчальний капстоун з ООП.
 Система управління орендою автомобілів — оновлено в main.
 

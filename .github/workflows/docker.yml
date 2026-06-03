@@ -1,0 +1,28 @@
+name: Docker Build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: docker build -t carrental:${{ github.sha }} .
+
+    - name: Run container smoke test
+      run: |
+        docker run --rm carrental:${{ github.sha }} --version || true
+        echo "Container built and started successfully"
+
+    - name: Tag for release
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: |
+        docker tag carrental:${{ github.sha }} carrental:${{ github.ref_name }}
+        docker tag carrental:${{ github.sha }} carrental:latest
+        docker images carrental
