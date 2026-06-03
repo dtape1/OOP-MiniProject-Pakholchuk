@@ -4,6 +4,8 @@ using CarRental.Console.Commands;
 using CarRental.Domain;
 using CarRental.Infrastructure;
 
+
+
 var carRepo = new JsonCarRepository("data/cars.json");
 var clientRepo = new JsonClientRepository("data/clients.json");
 var rentalRepo = new JsonRentalRepository("data/rentals.json", carRepo, clientRepo);
@@ -29,6 +31,27 @@ if (!service.GetAllClients().Any())
 }
 
 async Task SaveAll() { await carRepo.SaveAsync(); await clientRepo.SaveAsync(); await rentalRepo.SaveAsync(); }
+
+// Graceful shutdown
+AppDomain.CurrentDomain.ProcessExit += async (s, e) =>
+{
+    Console.WriteLine("\n Збереження даних перед зупинкою...");
+    await carRepo.SaveAsync();
+    await clientRepo.SaveAsync();
+    await rentalRepo.SaveAsync();
+    Console.WriteLine("Дані збережено. До побачення!");
+};
+
+Console.CancelKeyPress += (s, e) =>
+{
+    e.Cancel = true;
+    Console.WriteLine("\n Отримано сигнал зупинки. Зберігаємо дані...");
+    carRepo.SaveAsync().GetAwaiter().GetResult();
+    clientRepo.SaveAsync().GetAwaiter().GetResult();
+    rentalRepo.SaveAsync().GetAwaiter().GetResult();
+    Console.WriteLine("Готово!");
+    Environment.Exit(0);
+};
 
 var commands = new CarRental.Console.Commands.ICommand[]
 {
