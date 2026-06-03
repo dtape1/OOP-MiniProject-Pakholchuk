@@ -59,6 +59,7 @@ public class JsonRentalRepository : IRentalRepository
                 if (!car.IsAvailable) car.MakeAvailable();
 
                 var rental = new Rental(car, client, d.StartDate, d.EndDate, d.PricingStrategyName, d.Id);
+                // fix: explicitly restore TotalCost from JSON — constructor recalculates it
                 rental.SetTotalCost(d.TotalCost);
 
                 if (d.Status == "Completed")
